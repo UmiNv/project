@@ -21,8 +21,8 @@ window.addEventListener('DOMContentLoaded', ()=> {
          current = document.querySelector(`#current${i}`);
          
          
-         /* numberSlider.innerHTML += `
-            <div>${i}</div>`; */
+         numberSlider.innerHTML += `
+            <div>${i}</div>`;
         console.log(slider);
         console.log(slideIndex);
 
@@ -78,7 +78,7 @@ window.addEventListener('DOMContentLoaded', ()=> {
           width = window.getComputedStyle(slidesWrapper).width, //2 получаем ширину обертки слайдера
           prev2 = document.querySelector('.review_btnLeft'),//1кнопа previous
           next2 = document.querySelector('.review_btnRight');//1кнопа next
-          /* current2 = document.querySelector('#current-reviews'),
+         /*  current2 = document.querySelector('#current-reviews'),
           total2 = document.querySelector('#total-reviews'); */
     
 
@@ -205,11 +205,11 @@ window.addEventListener('DOMContentLoaded', ()=> {
             offset = +width.slice(0, width.length-2) * (slideTo - 1);
             slidesField.style.transform = `translateX(-${offset}px)`;
 
-            /* if (slides_reviews.length<10) {            
+            if (slides_reviews.length<10) {            
                 current2.textContent = `0${slideIndex2}`;
             } else {            
                 current2.textContent = slideIndex2;
-            } */
+            }
 
             dots.forEach(dot => dot.style.cssText = `
             margin: 0 15px;
