@@ -471,7 +471,7 @@
     top: 50%;
     transform: translateY(-50%);
     /* left: -83px; */
-    background:url('/img/to-left.png') center center/cover no-repeat;
+    background:url('../img/to-left.png') center center/cover no-repeat;
     cursor: pointer;
 }
 .reviews .review_btnRight {
@@ -483,7 +483,7 @@
     z-index: 2;
     /* right: -83px; */
     right: 0;
-    background:url('/img/to-right.png') center center/cover no-repeat;
+    background:url('../img/to-right.png') center center/cover no-repeat;
     cursor: pointer;
 }
 .reviews .reviews_dots {
@@ -706,7 +706,7 @@ footer .footer_ellips {
     display: block;
     height: 175px;
     width: 175px;
-    background: url('/img/Ellipse_footer.png') 100% 100%/cover no-repeat;
+    background: url('../img/Ellipse_footer.png') 100% 100%/cover no-repeat;
 }
 footer .footer_divider {
     width: 100%;
@@ -771,13 +771,13 @@ footer .social_phone {
     margin-right: 21px;
 }
 footer .social_vaiber {
-    background: url('/img/viber.png') 100% 100%/cover no-repeat; 
+    background: url('../img/viber.png') 100% 100%/cover no-repeat; 
     width: 23px;
     height: 23px;
     margin-right: 5px;
 }
 footer .social_telegram {
-    background: url('/img/telegram.png') 100% 100%/cover no-repeat; 
+    background: url('../img/telegram.png') 100% 100%/cover no-repeat; 
     width: 23px;
     height: 23px;
     margin-right: 5px;
@@ -787,7 +787,7 @@ footer .contacts_social {
     padding-top: 11px;
 } 
 footer .social_fb {
-    background: url('/img/фейсбук.png') 100% 100%/cover no-repeat; 
+    background: url('../img/фейсбук.png') 100% 100%/cover no-repeat; 
     width: 33px;
     height: 33px;
     bottom:0;
