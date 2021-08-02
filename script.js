@@ -228,4 +228,213 @@ window.addEventListener('DOMContentLoaded', ()=> {
         });
     });
 
+    //modal
+    const modalTriggerB = document.querySelectorAll('[data-modal="booking"]'),//все кнопки вызова брони
+          modalBooking = document.querySelector('#booking'),//форма брони
+          modalThBooking = document.querySelector('#thanksBooking'),//окно благодарности за бронь
+          //modalCloseBtn = document.querySelector('[data-close="booking"]'),//кнопка закрытия формы брони
+          modalTriggerR = document.querySelectorAll('[data-modal="review"]'),
+          modalReview = document.querySelector('#review'),//форма отправки отзыва
+          modalThReview = document.querySelector('#thanksReview');//окно благодарности за отзыв
+          //modalCloseBtnR = document.querySelector('[data-close="review"]');//кнопка закрытия формы отзыва
+
+          console.log(modalBooking);
+
+    function openModal(id) {
+        const modal = document.querySelector(`${id}`);
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+        document.body.style.overflow = 'hidden';
+    }    
+
+    modalTriggerB.forEach (btn => {
+        btn.addEventListener('click', () => {
+            openModal('#booking');
+        });
+    });   
+
+    modalTriggerR.forEach (btn => {
+        btn.addEventListener('click', () => {
+            openModal('#review');
+        });
+    });
+    
+    function closeModal(id) {
+        const modal = document.querySelector(`${id}`);
+        modal.classList.add('hide');
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+    
+    modalBooking.addEventListener('click', (e) => {
+        if (e.target === modalBooking || e.target.getAttribute('data-close') == '') {
+            closeModal('#booking');
+        }
+    });
+
+    modalReview.addEventListener('click', (e) => {
+        if (e.target === modalReview || e.target.getAttribute('data-close') == '') {
+            closeModal('#review');
+        }
+    });
+       
+    //server 
+    const forms = document.querySelectorAll('form');
+    const overlayBooking = document.querySelector('#booking'),
+          overlay = document.querySelectorAll('.overlay'),
+          overlayReview = document.querySelector('#review');
+
+    const  message = {
+        loading: 'img/spinner.svg',
+        success: 'Спасибо! Скоро мы с вами свяжемся',
+        failure: 'Что-то пошло не так...',
+        messageB: 'Спасибо за бронирование.<br>Ждём вас в гости!',
+        messageR: 'Спасибо за отзыв :-)',
+    };
+
+    forms.forEach (item => {
+        bindPostData(item);
+    });
+
+    const postData = (url, data) => {
+        const res = fetch(url, {
+            metod: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: data
+        });
+
+        return res.json();
+    };
+    
+    function bindPostData(form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();//отключаем реакцию браузера на нажатие кнопки, по умолчанию
+            
+            //создаем блок для сообщений о загрузке
+            let statusMessage = document.createElement('img');
+            statusMessage.src = message.loading;
+            statusMessage.style.cssText = `
+                display: block;
+                margin: 0 auto;
+            `;
+            form.insertAdjacentElement('afterend', statusMessage);
+            /* const statusMessage = document.createElement('div');
+            statusMessage.classList.add('status');
+            statusMessage.textContent = message.loading;
+            form.append(statusMessage); */
+
+            const request = new XMLHttpRequest();
+            request.open('POST', 'server.php');
+
+            request.setRequestHeader('Content-type', 'application/json'); //заголовок для отправки данных в формате json
+            const formData = new FormData(form);
+
+            //переводим formData В json
+            const object = {};
+            formData.forEach(function(value, key){
+                object[key] = value;
+            });
+            const json = JSON.stringify(object);
+            const objLenght = Object.keys(object).length;
+            request.send(json); //запрос в формате json
+
+            request.addEventListener('load', () => {
+                if (request.status === 200) { //позитивный сценарий
+                    console.log(request.response);
+                    console.log(Object.keys(object).length);
+
+                    if (objLenght == 5) {
+                        let thMessage = message.messageB; 
+                        showThanksModal(thMessage, '#b', '#booking');
+                    } else {
+                        let thMessage = message.messageR;
+                        showThanksModal(thMessage, '#r', '#review');
+                    }
+                    /* showThanksModal(thMessage); */
+                    //statusMessage.textContent = message.success;
+                    form.reset();//очищаем поля формы
+                    statusMessage.remove();
+                } else { //негативный сценарий
+                    statusMessage.textContent = message.failure;
+                }
+            });
+        });
+    }
+
+    function showThanksModal(message, idM, idModal) {
+        /* const prevModalDialog = document.querySelector('.modal__dialog'); */
+               
+        const prevModalDialog = document.querySelector(idM);
+        
+        prevModalDialog.classList.add('hide');
+        openModal(idModal);
+        
+        const thanksModal = document.createElement('div');
+        thanksModal.classList.add('modalTh');
+        thanksModal.innerHTML = `
+                <div data-close class="modal__close">&times;</div>
+                <div class="modal__descr">${message}</div>
+        `;
+        /* document.querySelector('.overlay').append(thanksModal); */
+        document.querySelector(idModal).append(thanksModal);
+        setTimeout(() => {
+            thanksModal.remove();
+            prevModalDialog.classList.add('show');
+            prevModalDialog.classList.remove('hide');
+            closeModal(idModal);          
+            
+        }, 4000);
+    }
+    fetch('http://localhost:3000/reviews')
+        .then(data => data.json())
+        .then(res => console.log(res));
+    
+    //карточки отзывов
+    class ReviewBlock {
+        constructor(name, descr, data, parentSelector) {
+            this.name = name;
+            this.descr = descr;
+            this.data = data;
+            this.parent = document.querySelector(parentSelector);
+        }
+
+        render () {
+            const element = document.createElement('div');
+            element.classList.add('col-md-5');
+            element.innerHTML = `                
+                    <div class="review_block">
+                        <div class="review_text">${this.descr}</div>
+                        <div class="review_name">${this.name}</div><div class="review_date">${this.data}</div>
+                    </div>               
+            `;
+            this.parent.append(element);
+        }
+        
+    }
+    
+    new ReviewBlock(
+        "Светлана",
+        "Пару дней как приехала с моря (неделю отдыхала в этом пансионате). Впечатления только положительные. В комнатах, в душах, во дворе чистота и порядок, хозяйка просто умничка. Советую всем - не пожалеете.",
+        "25.06.15",
+        ".reviews .offer__slider-reviews .offer__slide-reviews .row"
+    ).render();
+
+    new ReviewBlock(
+        "Мария",
+        "Хочу предупредить всех! Не везите с собой посуду и всё, что только вам придет в голову ) В этом году мы допустили эту ошибку и привезли всё с собой. <br>А оказалось в пансионате есть абсолютно всё, чему были очень приятно удивлены. Лариса, спасибо вам за то, что наш отдых был максимально комфортный и уютный. Привет от всей семьи.",
+        "27.09.17",
+        ".reviews .offer__slider-reviews .offer__slide-reviews .row"
+    ).render();
+
+    function offsetDiv() {
+        const SliderBlocks = document.querySelectorAll('.offer__slider-reviews');
+        SliderBlocks.forEach((item, i) => {
+            const firstBlock = item.querySelector('.col-md-5');
+            firstBlock.classList.add('offset-1');
+        });
+    }
+    offsetDiv();
+
 });

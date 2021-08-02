@@ -1,6 +1,12 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
+.show {
+    display: block !important;
+}
+.hide {
+    display: none !important;
+}
 .promo {
     padding: 39px 0;
     height: 700px;
@@ -791,4 +797,144 @@ footer .social_fb {
     width: 33px;
     height: 33px;
     bottom:0;
+}
+.overlay {
+    display: none;
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .74);
+}
+.overlay .modal {
+    padding: 17px 14px 25px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 30px;
+    width: 302px;
+    min-height: 441px;
+    background-color: #ffffff;
+    box-shadow: -2px 3px 5px 0px rgba(0,0,0,0.4);
+}
+.overlay .modal__close {
+    text-align: center;
+    border-radius: 50%;
+    /* padding: 8px; */
+    width: 29px;
+    height: 29px;
+    border: 2px solid #ffffff;
+    color: white;
+    line-height: 19px;
+    font-size: 28px;
+    font-weight: 300;
+    position: absolute;
+    top: -24px;
+    right: -24px;
+    cursor: pointer;
+}
+.overlay .modal__subtitle {
+    padding-bottom: 19px;
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #131313;
+    text-align: center;
+}
+#booking, #review {
+    display: none;
+}
+
+.modal input {
+    width: 275px;
+    height: 35px;
+    border: 1px solid #e6e6e6;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #595959;
+}
+.modal textarea {
+    width: 275px;
+    height: 253px;
+    border: 1px solid #e6e6e6;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #595959;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 0;
+}
+.modal select {
+    width: 275px;
+    height: 39px;
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #595959;
+    margin-top: 5px;
+}
+.modal p {
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #595959;
+    margin:5px 0 10px;
+}
+.modal .modalBtn {
+    padding-top: 4px;
+    border-radius: 30px;
+    width: 133px;
+    height: 39px;
+    background-color: #509aff;
+    box-shadow: -2px 3px 5px 0px rgba(0,0,0,0.25);
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #131313;
+    border: 0;
+    outline: 0;
+    left: 50%;
+    transform: translateX(50%);    
+    margin-top: 18px;
+}
+.overlay .modalTh {
+    padding: 17px 59px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 30px;
+    /* width: 302px;
+    min-height: 66px; */
+    text-align: center;
+    background-color: #ffffff;
+    box-shadow: -2px 3px 5px 0px rgba(0,0,0,0.4);
+}
+.modal .modal__descr {
+    /* width: 302px;
+    height: 66px;
+    background-color: #ffffff;
+    box-shadow: -2px 3px 5px 0px rgba(0,0,0,0.4);
+    border-radius: 30px; */
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #595959;
+    text-align: center;
+    
+}
+#thanksBooking, #thanksReview {
+    display: none;
 }
